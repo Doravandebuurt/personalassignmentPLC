@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="FB_HEATING" Id="{20d89b82-110c-46de-a9a3-a9f598c41c27}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HEATING
+VAR_INPUT
+	ix_START: BOOL;
+	TEMP: DINT;
+	SETPOINT: DINT;
+END_VAR
+VAR_OUTPUT
+	HEATING:BOOL;
+END_VAR
+VAR
+	STATE: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE STATE OF
+	0: // Idle
+        HEATING := FALSE;
+        // Start cycle
+        IF ix_START THEN
+            STATE := 1;
+        END_IF;
+    1:
+        IF ix_START = FALSE THEN
+            STATE := 0;
+        END_IF;
+        IF (TEMP < SETPOINT) THEN
+			HEATING :=TRUE;
+		ELSE
+			HEATING :=FALSE;
+		END_IF
+END_CASE;
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HEATING">
+      <LineId Id="27" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="39" Count="3" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="46" Count="2" />
+      <LineId Id="68" Count="3" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
