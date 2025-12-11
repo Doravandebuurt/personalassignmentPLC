@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <GVL Name="GVL" Id="{de879a6a-3d10-49ab-9dbf-d744f51d9e1c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	ix_START :BOOL;
+	
+	ox_FILTER_WATER: BOOL;
+	ox_HEATER: BOOL;
+	id_TEMP_SENSOR: DINT:=20;
+	ix_COOLDOWN: BOOL;
+	ix_TEMPRESET: BOOL;
+	
+	ox_CO2: BOOL;
+	ox_LIGHT: BOOL;
+	id_TEMP_SETPOINT: DINT:=28;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
