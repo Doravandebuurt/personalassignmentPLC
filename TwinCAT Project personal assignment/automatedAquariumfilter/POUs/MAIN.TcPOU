@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{75683ed3-513e-4c3d-9049-ff092608163c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	FilterCycle1 : FB_FILTER;  // instantie van FB
+
+	CO2_1:FB_CO2;
+	LIGHT1:FB_LIGHT;
+	
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GVL.id_TEMP_SETPOINT:=28;
+
+IF GVL.ix_TEMPRESET THEN
+	GVL.id_TEMP_SENSOR := 30;
+	GVL.ix_TEMPRESET:=FALSE;
+END_IF
+
+IF GVL.ix_COOLDOWN THEN
+	GVL.id_TEMP_SENSOR := GVL.id_TEMP_SENSOR -5;
+	GVL.ix_COOLDOWN:=FALSE;
+END_IF	
+
+GVL.ox_CO2 :=CO2_1.CO2;
+GVL.ox_FILTER_WATER := FilterCycle1.FILTER_WATER;
+GVL.ox_LIGHT :=LIGHT1.LIGHT;
+
+//FUNCTIEBLOKKEN
+
+FilterCycle1(ix_START := GVL.ix_START);
+CO2_1(ix_START :=GVL.ix_START);
+LIGHT1(ix_START :=GVL.ix_START);
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="481" Count="1" />
+      <LineId Id="466" Count="7" />
+      <LineId Id="380" Count="0" />
+      <LineId Id="444" Count="0" />
+      <LineId Id="454" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="457" Count="0" />
+      <LineId Id="450" Count="0" />
+      <LineId Id="445" Count="1" />
+      <LineId Id="443" Count="0" />
+      <LineId Id="453" Count="0" />
+      <LineId Id="456" Count="0" />
+      <LineId Id="476" Count="0" />
+      <LineId Id="478" Count="0" />
+      <LineId Id="451" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

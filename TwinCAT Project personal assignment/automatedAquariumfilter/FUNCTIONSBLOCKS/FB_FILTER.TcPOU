@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="FB_FILTER" Id="{eec5ec37-a05f-4785-82fc-28c0f73de6b6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_FILTER
+VAR_INPUT
+    ix_START : BOOL;  // HMI start input
+
+END_VAR
+VAR_OUTPUT
+    FILTER_WATER : BOOL;  // output naar MAIN/HMI
+END_VAR
+VAR
+    STATE_FILTER : INT := 0;  // interne state
+    T_CYCLE : TON; 
+    elapsed_ms : UDINT;  // elapsed time in ms
+    cycle_ms   : UDINT;  // 5-second repeating cycle
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// --- CASE state machine ---
+CASE STATE_FILTER OF
+
+    0: // Idle
+        FILTER_WATER := FALSE;
+
+        // Stop cycle timer
+        T_CYCLE(IN := FALSE);
+
+        // Start cycle
+        IF ix_START THEN
+            STATE_FILTER := 1;
+        END_IF;
+
+    1: // 30s cycle running
+        // Abort cycle if button released
+        IF ix_START = FALSE THEN
+            STATE_FILTER := 0;
+        END_IF;
+
+        // Start 30-second timer
+        T_CYCLE(IN := TRUE, PT := T#30S);
+	
+		// Convert elapsed time to milliseconds
+		elapsed_ms := TO_UDINT(T_CYCLE.ET);
+
+		// Create repeating 5-second cycle
+		cycle_ms := elapsed_ms MOD 5000; // 5000 ms = 5 seconds
+		
+		// 0-3s -> ON, 3-5s -> OFF
+		IF cycle_ms < 3000 THEN
+			FILTER_WATER := TRUE;
+		ELSE
+			FILTER_WATER := FALSE;
+		END_IF;
+		        // End of cycle
+        IF T_CYCLE.Q THEN
+            STATE_FILTER := 0;
+        END_IF;
+       
+END_CASE;
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_FILTER">
+      <LineId Id="96" Count="12" />
+      <LineId Id="110" Count="8" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="186" Count="9" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="198" Count="2" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

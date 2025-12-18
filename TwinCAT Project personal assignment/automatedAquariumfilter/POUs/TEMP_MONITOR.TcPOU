@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="TEMP_MONITOR" Id="{207a7309-f67d-4d97-8914-0c83f9d25e13}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM TEMP_MONITOR
+VAR
+		WaterCooling1: FB_WATERCOOLING;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[WaterCooling1(HEATER:=GVL.ox_HEATER,TEMP_SENSOR:=GVL.id_TEMP_SENSOR);
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="TEMP_MONITOR">
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

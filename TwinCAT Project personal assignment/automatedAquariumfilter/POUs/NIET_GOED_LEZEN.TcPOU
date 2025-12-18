@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="NIET_GOED_LEZEN" Id="{ef78d04c-f904-48ac-b28f-3fe7a5e193ec}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM NIET_GOED_LEZEN
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="NIET_GOED_LEZEN">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

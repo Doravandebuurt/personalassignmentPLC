@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="HEATING" Id="{8ac95230-94a2-43ca-860b-e38e82f2822b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM HEATING
+VAR
+	HEATING1:FB_HEATING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+// GVL output koppelen
+GVL.ox_HEATER :=HEATING1.HEATING;
+
+HEATING1(ix_START:=GVL.ix_START,TEMP:=GVL.id_TEMP_SENSOR,
+SETPOINT:=GVL.id_TEMP_SETPOINT);]]></ST>
+    </Implementation>
+    <LineIds Name="HEATING">
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
